@@ -3,18 +3,20 @@
 Python application which enables processing of files from AWS S3 bucket and stores processing data within the local database.
 
 Requirements:
-* MongoDB
+* MongoDB installed, up and running
 * aws cli configured with appropriate credentials
 
 ---
 
-Run API: 
+### Run API: 
 
+Enter dir python-dev-app/src and run: 
+    
     python run.py
 
 * NOTE: expect API to be available on default Flask port: 5000
 
-API:
+#### API:
  
 * GET /files/fetch/all
 
@@ -30,31 +32,39 @@ If file already exists, only timestamp gets updated.
 
 Returns fetched file name, hash and success status.
 
-* GET /files/info/all
+* GET /files/info_all
 
-Get stored info in DB for all processed files.
+Get stored info from DB for all processed files.
 
 Returns all available info about stored files.
 
 * GET /files/info/<file_name>
 
-Get stored info in DB for concrete file name.
+Get stored info from DB for concrete file name.
 
 Return available info stored in DB for concrete file.
 
 
 ---
 
-Run CLI:
+### Run CLI:
 
-    run.py [-h] [-ff FETCH_FILE] [-ffa] [-sfi STORED_FILE_INFO] [-sfia]
+Enter dir python-dev-app/src and run: 
 
-CLI:
+    run.py [-h] [-ff FETCH_FILE] [-ffa] [-sfi STORED_FILE_INFO] [-sfia] [-b BUCKET]
+
+#### CLI:
 
 Arguments:
 
     -h, --help            Shows help message and exit
   
+    -b BUCKET, --bucket BUCKET Bucket name from which files should be fetched.
+        
+        Required for -ff and -ffa (fetching files).
+        
+        
+        
     -ff FETCH_FILE, --fetch_file FETCH_FILE File name to be downloaded.
     
     
@@ -88,3 +98,45 @@ Arguments:
     
     
     NOTE: More than one argument can not be used.
+    
+##### Examples
+
+Fetch all files from bucket named 'test':
+
+    python run.py -ffa -b test
+
+Fetch one file named 'test' from bucket 'test':
+
+    python run.py -ff test -b test
+    
+Get file named 'test' info:
+
+    python run.py -sfi test
+    
+Get stored info about all files:
+
+    python run.py -sfia
+    
+
+
+## Tests
+
+#### Available tests:
+        
+* File model tests
+
+    Enter root dir (ptyhon-dev-app) and run:
+
+        python -m unittest src.tests.test_file_model.TestFileModel
+        
+* File service tests
+
+    Enter root dir (ptyhon-dev-app) and run:
+        
+        python -m unittest src.tests.test_file_service.TestFileService
+        
+* API tests
+
+    Enter root dir (ptyhon-dev-app) and run:
+    
+         python -m unittest src.tests.test_api.TestFilesAPI
