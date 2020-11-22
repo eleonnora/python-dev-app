@@ -7,7 +7,7 @@ Requirements:
 
 ---
 
-### Before run:
+### Before run
 
  * Install requirements:
 
@@ -161,7 +161,7 @@ Get stored info about all files:
 
 #### Available tests:
 
-NOTE: export necessary ENV variables described above before running tests.
+NOTE: export necessary ENV variables described above (section [Before run](#before-run)) before running tests.
 
 * File model tests
 
