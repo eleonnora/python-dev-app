@@ -5,7 +5,7 @@ from ..services import s3_fetch_file, s3_fetch_files, get_files_info
 files_blueprint = Blueprint('files_blueprint', __name__)
 
 
-@files_blueprint.route('/fetch/<bucket_name>/all', methods=['GET'])
+@files_blueprint.route('/fetch/<bucket_name>', methods=['GET'])
 def fetch_files(bucket_name):
     print 's3_fetch_files invoke'
     files = s3_fetch_files(bucket_name)

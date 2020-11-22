@@ -8,6 +8,10 @@ Requirements:
 
 ---
 
+Before run isntall requirements:
+
+    pip install -r requirements.txt
+
 ### Run API: 
 
 Enter dir python-dev-app/src and run: 
@@ -18,14 +22,14 @@ Enter dir python-dev-app/src and run:
 
 #### API:
  
-* GET /files/fetch/all
+* GET /files/fetch/<bucket_name>
 
 Fetch all available files within Bucket. Store files info in DB.
 If some of the files already exist, only timestamps get updated.
 
 Returns fetched file names, hashes and success status.
 
-* GET /files/fetch/<file_name>
+* GET /files/fetch/<bucket_name>/<file_name>
 
 Fetch concrete file from bucket. Store file info in DB.
 If file already exists, only timestamp gets updated.
