@@ -115,7 +115,7 @@ Arguments:
     Returns all available info about stored files.
     
     
-    NOTE: More than one argument can not be used.
+    NOTE: More than one argument can not be used (except -b, it has to go with -ffa and -ff).
     
 ##### Examples
 
