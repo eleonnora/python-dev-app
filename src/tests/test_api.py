@@ -6,6 +6,7 @@ sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 from app import api_up
 from app.models.files import drop_files
 
+
 class TestFilesAPI(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -22,7 +23,7 @@ class TestFilesAPI(unittest.TestCase):
 
     def test_fetch_files(self):
         bucket = 'hola.amigo.como.estas'
-        response = self.client().get('/files/fetch/' + bucket + '/all')
+        response = self.client().get('/files/fetch/' + bucket)
         rsp = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(len(rsp) is 2)
@@ -36,18 +37,15 @@ class TestFilesAPI(unittest.TestCase):
         self.assertTrue(rsp['success'] is True)
 
     def test_files_info_all(self):
-        response = self.client().get('/files/info_all')
+        response = self.client().get('/files/info')
         rsp = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
-        print len(rsp)
         self.assertTrue(len(rsp) >= 2)
 
     def test_file_info(self):
         file_name = 'text.txt'
         response = self.client().get('/files/info/' + file_name)
-        rsp = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(len(rsp) is 1)
 
 
 if __name__ == '__main__':

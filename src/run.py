@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
     if cmd_args:
         response = app_cli(args)
-        print response
+        print '\n Response: \n\n', response, '\n'
     else:
         api_up()
 

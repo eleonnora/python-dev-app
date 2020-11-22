@@ -13,8 +13,18 @@ Requirements:
 
         pip install -r requirements.txt
 
- * Create *.env* file under *python-dev-app/src/app* and add ACCESS_KEY, SECRET and REGION_NAME for
-    desired AWS account
+ * Export following ENV variables:
+
+        ACCESS_KEY=***
+
+        SECRET=***
+
+        REGION_NAME=***
+
+        DB_HOST=127.0.0.1
+
+   Where ACCESS_KEY, SECRET and REGION_NAME are associated with appropriate AWS account.
+
 
 ### Run API: 
 
@@ -126,11 +136,33 @@ Get stored info about all files:
     python run.py -sfia
     
 
+### Run API in Docker
+
+* Build image:
+
+        cd python-dev-app
+
+        docker build -t py_app .
+
+* Run docker compose:
+
+    * Update necessary ENV variables
+    (ACCESS_KEY, SECRET and REGION_NAME associated with appropriate AWS account)in *python-dev-app/docker-compose.yaml* file
+
+    * Run:
+
+            cd python-dev-app
+
+            docker-compose up
+
+    * App should be up and running, available on port 5000
 
 ## Tests
 
 #### Available tests:
-        
+
+NOTE: export necessary ENV variables described above before running tests.
+
 * File model tests
 
     Enter root dir (ptyhon-dev-app) and run:

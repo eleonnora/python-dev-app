@@ -3,6 +3,7 @@ from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
 from datetime import datetime
 from bson.json_util import dumps
 from .. import constants
+from ..settings import DB_HOST
 
 client = None
 db = None
@@ -23,13 +24,15 @@ FILE_COLLECTION = {
     'updated': ''
 }
 
+db_url = 'mongodb://' + DB_HOST + ':27017/'
+
 try:
     # Create connection to MongoDB
-    client = MongoClient(constants.DB_URL)
+    client = MongoClient(db_url)
     # Use db named DB_NAME
     db = client[constants.DB_NAME]
 except ConnectionFailure:
-    print("Mongo Server not available on url: ", constants.DB_URL)
+    print("Mongo Server not available on url: ", db_url)
     exit(-1)
 
 

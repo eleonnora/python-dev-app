@@ -37,21 +37,18 @@ class TestFileService(unittest.TestCase):
         s3_fetch_file(file_name, bucket)
 
         response = get_files_info({'file_name': file_name})
-        rsp_dict = json.loads(response)
-        self.assertTrue(len(rsp_dict) == 1)
+        self.assertTrue(len(json.loads(response['data'])) is 1)
 
     def test_get_file_info_fail(self):
         file_name = 'non_existing_file_name'
         response = get_files_info({'file_name': file_name})
-        rsp_dict = json.loads(response)
-        self.assertTrue(len(rsp_dict) == 0)
+        self.assertTrue(len(json.loads(response['data'])) is 0)
 
     def test_get_file_info_all(self):
         bucket = 'hola.amigo.como.estas'
         s3_fetch_files(bucket)
         response = get_files_info({})
-        rsp_dict = json.loads(response)
-        self.assertTrue(len(rsp_dict) > 0)
+        self.assertTrue(len(response) > 0)
 
     def test_calculate_file_hash_fail(self):
         file_path = 'non/existing/path/text.txt'

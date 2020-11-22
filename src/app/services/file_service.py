@@ -7,7 +7,7 @@ from uuid import uuid1
 from bson.json_util import dumps
 import pathlib
 from datetime import datetime
-from ..settings import SECRET, ACCESS_KEY, REGION_NAME
+from ..settings import SECRET, ACCESS_KEY, REGION_NAME, DB_HOST
 
 session = Session(
     aws_access_key_id=ACCESS_KEY,
@@ -15,7 +15,6 @@ session = Session(
     region_name=REGION_NAME
 )
 
-print ACCESS_KEY, SECRET
 s3 = session.resource('s3')
 
 """
@@ -124,9 +123,9 @@ returns found data or error message if fails
 def get_files_info(query):
     response = find_file(query)
     if not response:
-        return 'Getting files info failed.'
+        return build_error_response('Getting files info failed.')
 
-    return response
+    return build_success_response(response)
 
 ##############################################################################
 # Helpers

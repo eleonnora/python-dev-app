@@ -6,9 +6,15 @@ from services import s3_fetch_file, s3_fetch_files, get_files_info
 def api_up():
     print 'api_up:: Run API.'
     app = Flask(__name__)
+
+    @app.route('/', defaults={'path': ''})
+    @app.route('/<path:path>')
+    def catch_all(path):
+        return 'Nothing to find here. \n Try another path.'
+
     # Register fetching files and populating data API
     app.register_blueprint(files_blueprint, url_prefix='/files')
-    app.run()
+    app.run('0.0.0.0', '5000')
     return app
 
 
