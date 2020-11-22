@@ -77,13 +77,13 @@ Arguments:
 
     -h, --help            Shows help message and exit
   
-    -b BUCKET, --bucket BUCKET Bucket name from which files should be fetched.
+    -b BUCKET, --bucket BUCKET_NAME Bucket name from which files should be fetched.
         
         Required for -ff and -ffa (fetching files).
         
         
         
-    -ff FETCH_FILE, --fetch_file FETCH_FILE File name to be downloaded.
+    -ff FILE_NAME, --fetch_file FILE_NAME File name to be downloaded.
     
     
         Fetch concrete file from bucket. Store file info in DB.
@@ -101,7 +101,7 @@ Arguments:
   
   
   
-    -sfi STORED_FILE_INFO, --stored_file_info STORED_FILE_INFO Get file info from DB.
+    -sfi FILE_NAME, --stored_file_info FILE_NAME Get file info from DB.
         
         Get stored info in DB for all processed files.
     Returns all available info about stored files.
