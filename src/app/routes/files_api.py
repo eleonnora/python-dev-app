@@ -19,7 +19,7 @@ def fetch_file(bucket_name, file_name):
     return location
 
 
-@files_blueprint.route('/info_all', methods=['GET'])
+@files_blueprint.route('/info', methods=['GET'])
 def fetch_all_files_info():
     print 'get_files_info all invoke'
     files_info = get_files_info({})
