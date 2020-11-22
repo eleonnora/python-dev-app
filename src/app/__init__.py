@@ -9,11 +9,6 @@ def api_up():
     # Register fetching files and populating data API
     app.register_blueprint(files_blueprint, url_prefix='/files')
     app.run()
-
-    @app.errorhandler(404)
-    def page_not_found():
-        return 'This page does not exist', 404
-
     return app
 
 

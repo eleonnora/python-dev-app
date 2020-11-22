@@ -1,14 +1,22 @@
 from ..models import insert_file_info, find_file, update_file_info
 from hashlib import md5
 from os import path, remove
-from boto3 import resource
+from boto3 import resource, Session
 from botocore import exceptions
 from uuid import uuid1
 from bson.json_util import dumps
 import pathlib
 from datetime import datetime
+from ..settings import SECRET, ACCESS_KEY, REGION_NAME
 
-s3 = resource('s3')
+session = Session(
+    aws_access_key_id=ACCESS_KEY,
+    aws_secret_access_key=SECRET,
+    region_name=REGION_NAME
+)
+
+print ACCESS_KEY, SECRET
+s3 = session.resource('s3')
 
 """
 

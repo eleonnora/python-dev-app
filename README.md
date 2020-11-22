@@ -4,13 +4,17 @@ Python application which enables processing of files from AWS S3 bucket and stor
 
 Requirements:
 * MongoDB installed, up and running
-* aws cli configured with appropriate credentials
 
 ---
 
-Before run isntall requirements:
+### Before run:
 
-    pip install -r requirements.txt
+ * Install requirements:
+
+        pip install -r requirements.txt
+
+ * Create *.env* file under *python-dev-app/src/app* and add ACCESS_KEY, SECRET and REGION_NAME for
+    desired AWS account
 
 ### Run API: 
 
