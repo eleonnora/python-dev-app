@@ -10,10 +10,28 @@ from datetime import datetime
 
 s3 = resource('s3')
 
+"""
 
-# API
+Fetches all the available files within given bucket.
 
-# Fetch all the available files within bucket
+bucket_name - Bucket name
+
+returns:
+
+Success: list of fetched files with success status, file name and hash data:
+[{
+    'success': boolean,
+    'data': {'file_name': file_name, 'file_hash': file_hash}
+}, ... ]
+
+Fail: dict with falsy success status and error message:
+{
+    'success': boolean,
+    'error': string
+}
+"""
+
+
 def s3_fetch_files(bucket_name):
     response = []
     if bucket_name is None:
@@ -33,7 +51,27 @@ def s3_fetch_files(bucket_name):
         return build_error_response('Failed to fetch s3 resources.')
 
 
-# Fetch and process the file from bucket
+"""
+
+Fetches and processes the file from the given bucket.
+
+file_name - File name to be fetched
+bucket_name - Bucket name
+
+Success: dict with success status, file name and hash data:
+{
+    'success': boolean,
+    'data': {'file_name': file_name, 'file_hash': file_hash}
+}
+
+Fail: dict with falsy success status and error message:
+{
+    'success': boolean,
+    'error': string
+}
+"""
+
+
 def s3_fetch_file(file_name, bucket_name):
     if bucket_name is None:
         return build_error_response('Missing bucket name!')
@@ -65,7 +103,16 @@ def s3_fetch_file(file_name, bucket_name):
         return build_error_response('Fetching file failed, invalid arguments.')
 
 
-# Get stored files info
+"""
+
+Gets file info stored in DB.
+
+query - Dict containing none, one or more of: file_name, file_s3_bucket, file_hash
+
+returns found data or error message if fails
+"""
+
+
 def get_files_info(query):
     response = find_file(query)
     if not response:
@@ -75,6 +122,29 @@ def get_files_info(query):
 
 ##############################################################################
 # Helpers
+
+
+"""
+
+Method calculates file hash and stores appropriate info in DB.
+
+file_name - File name
+tmp_file_path - Temporary file path to which file will be download in order to be processed
+bucket_name - Bucket name
+
+returns:
+
+Success: dict with success status, file name and hash data:
+{
+    'success': boolean,
+    'data': {'file_name': file_name, 'file_hash': file_hash}
+}
+Fail: dict with falsy success status and error message:
+{
+    'success': boolean,
+    'error': string
+}
+"""
 
 
 def store_file_info(file_name, tmp_file_path, bucket_name):
@@ -104,7 +174,16 @@ def store_file_info(file_name, tmp_file_path, bucket_name):
     return {'success': success, 'data': {'file_name': file_name, 'file_hash': file_hash}}
 
 
-# Calculate file hash
+"""
+
+Calculates hash of file on given path.
+
+file_path - file for which hash should be calculated
+
+returns False if file does not exist, otherwise returns calculated hash
+"""
+
+
 def calculate_file_hash(file_path):
     if not path.exists(file_path):
         return False

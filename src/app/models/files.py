@@ -4,16 +4,17 @@ from datetime import datetime
 from bson.json_util import dumps
 from .. import constants
 
-
 client = None
 db = None
 
+# Field names which exist in DB collection
 FILE_NAME = 'file_name'
 HASH = 'hash'
 CREATED = 'created'
 UPDATED = 'updated'
 FILE_S3_BUCKET = 'file_S3_bucket'
 
+# Dict DB document holder
 FILE_COLLECTION = {
     'file_S3_bucket': '',
     'file_name': '',
@@ -22,9 +23,8 @@ FILE_COLLECTION = {
     'updated': ''
 }
 
-
 try:
-    # Create connection
+    # Create connection to MongoDB
     client = MongoClient(constants.DB_URL)
     # Use db named DB_NAME
     db = client[constants.DB_NAME]
@@ -33,7 +33,15 @@ except ConnectionFailure:
     exit(-1)
 
 
-# Find file or files in DB with given query arguments
+"""
+Finds file or files in DB with given query arguments.
+
+query_arguments - Dict containing none, one or more of: file_name, file_s3_bucket, file_hash
+
+returns found data or False if connection fails
+"""
+
+
 def find_file(query_arguments):
     # Generate query based on arguments
     query = generate_query(query_arguments)
@@ -45,6 +53,15 @@ def find_file(query_arguments):
     except ServerSelectionTimeoutError:
         print 'find_file:: server connection timeout'
         return False
+
+
+"""
+Verifies passed arguments and generates appropriate query.
+
+arguments - Dict containing none, one or more of: file_name, file_s3_bucket, file_hash
+
+return prepared query
+"""
 
 
 def generate_query(arguments):
@@ -60,6 +77,17 @@ def generate_query(arguments):
         query[HASH] = arguments[HASH]
 
     return query
+
+
+"""
+Inserts/creates new document based on provided info.
+
+file_s3_bucket - Bucket name
+file_name - File name
+file_hash - File hash
+
+returns True if insertion succeed, False if it fails
+"""
 
 
 def insert_file_info(file_s3_bucket, file_name, file_hash):
@@ -93,7 +121,17 @@ def insert_file_info(file_s3_bucket, file_name, file_hash):
         return False
 
 
-# Update file info based on query arguments and with update_fields
+"""
+
+Updates file document with provided info based on query arguments.
+
+query_arguments - Dict containing none, one or more of: file_name, file_s3_bucket, file_hash
+update_fields - Fields to be updated in found document
+
+returns True if update succeed, False if it fails
+"""
+
+
 def update_file_info(query_arguments, update_fields):
     query = generate_query(query_arguments)
 
@@ -103,6 +141,13 @@ def update_file_info(query_arguments, update_fields):
     except ServerSelectionTimeoutError:
         print 'update_file_info:: server connection timeout'
         return False
+
+
+"""
+Drops collection named COLL_NAME
+
+returns True if drop succeed, False if it fails
+"""
 
 
 def drop_files():
