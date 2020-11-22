@@ -36,7 +36,7 @@ If file already exists, only timestamp gets updated.
 
 Returns fetched file name, hash and success status.
 
-* GET /files/info_all
+* GET /files/info
 
 Get stored info from DB for all processed files.
 
